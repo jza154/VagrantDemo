@@ -8,12 +8,18 @@ end
 
 # Base configuration recipe in Chef.
 package "wget"
+package "tree"
 package "ntp"
 package "nginx"
-package "tree"
+package "postgresql"
 package "ack-grep"
 cookbook_file "ntp.conf" do
   path "/etc/ntp.conf"
+end
+cookbook_file "/var/www/html/index.html" do
+	source "index.html"
+	mode "0644"
+	owner "root"
 end
 execute 'ntp_restart' do
   command 'service ntp restart'
